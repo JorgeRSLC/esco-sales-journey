@@ -8,332 +8,6 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" />
 <link rel="stylesheet" href="esco.css" />
-<style>
-  /* Journey map layout ---------------------------- */
-  .journey {
-    padding: 20px 0 96px;
-    overflow-x: auto;
-  }
-  .journey-scroll {
-    min-width: 1280px;
-  }
-  .lane-labels {
-    display: grid;
-    grid-template-columns: 180px 1fr;
-    gap: 24px;
-    margin-bottom: 16px;
-  }
-  .lane-labels .label-col {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-  .lane-labels .lane-label {
-    font-family: var(--mono);
-    font-size: 10px;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--muted);
-  }
-
-  /* Two-lane grid --------------------------------- */
-  .journey-grid {
-    display: grid;
-    grid-template-columns: 200px 1fr;
-    gap: 32px;
-    align-items: stretch;
-  }
-  .origin-col {
-    display: flex;
-    align-items: center;
-  }
-  .lanes {
-    display: grid;
-    grid-template-rows: 1fr auto 1fr;
-    gap: 0;
-    position: relative;
-  }
-  .lane {
-    position: relative;
-    padding: 16px 0;
-  }
-  .lane-proposal {
-    border-bottom: 1px dashed var(--line);
-  }
-  .lane-nurture {
-    padding-top: 24px;
-  }
-  .lane-gap {
-    min-height: 48px;
-    position: relative;
-  }
-
-  /* Stage cards ----------------------------------- */
-  .stage-row {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 24px;
-    align-items: start;
-  }
-  .stage {
-    background: var(--paper);
-    border: 1px solid var(--line);
-    border-radius: 8px;
-    padding: 18px 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    cursor: pointer;
-    transition: border-color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
-    text-decoration: none;
-    color: inherit;
-    position: relative;
-  }
-  .stage:hover {
-    border-color: var(--primary);
-    transform: translateY(-1px);
-    box-shadow: 0 8px 24px rgba(10, 37, 64, 0.08);
-  }
-  .stage .stage-num {
-    font-family: var(--mono);
-    font-size: 10px;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--accent);
-  }
-  .stage .stage-title {
-    font-family: var(--display);
-    font-weight: 700;
-    font-size: 18px;
-    letter-spacing: -0.02em;
-    line-height: 1.15;
-    color: var(--ink);
-  }
-  .stage .stage-sub {
-    font-family: var(--display);
-    font-weight: 500;
-    font-size: 13px;
-    color: var(--muted);
-    letter-spacing: -0.01em;
-  }
-  .stage .stage-body {
-    font-size: 13px;
-    color: var(--muted);
-    line-height: 1.5;
-  }
-  .stage .stage-chips {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-    margin-top: 2px;
-  }
-  .stage .stage-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 6px;
-    padding-top: 10px;
-    border-top: 1px solid var(--line-soft);
-  }
-  .stage .expand-btn {
-    font-family: var(--mono);
-    font-size: 10px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--muted);
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    padding: 0;
-  }
-  .stage .expand-btn:hover { color: var(--ink); }
-  .stage .deep-link {
-    font-family: var(--mono);
-    font-size: 10px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--accent);
-  }
-  .stage .expandable {
-    display: none;
-    font-size: 13px;
-    color: var(--ink);
-    line-height: 1.5;
-    padding-top: 8px;
-    border-top: 1px dashed var(--line);
-    margin-top: 4px;
-  }
-  .stage.open .expandable { display: block; }
-  .stage .expandable ul {
-    margin: 6px 0 0;
-    padding-left: 18px;
-    color: var(--muted);
-  }
-  .stage .expandable li { margin-bottom: 4px; }
-
-  /* Origin stage (Stage 1) ------------------------ */
-  .stage-origin {
-    background: var(--primary);
-    color: #fff;
-    border-color: var(--primary);
-    min-height: 180px;
-    justify-content: center;
-  }
-  .stage-origin:hover { border-color: var(--accent); }
-  .stage-origin .stage-num { color: var(--accent); }
-  .stage-origin .stage-title { color: #fff; }
-  .stage-origin .stage-body { color: rgba(255,255,255,0.7); }
-  .stage-origin .stage-footer { border-top-color: rgba(255,255,255,0.15); }
-  .stage-origin .expand-btn { color: rgba(255,255,255,0.7); }
-  .stage-origin .expand-btn:hover { color: #fff; }
-  .stage-origin .deep-link { color: var(--accent); }
-
-  /* Stage 2 decision variants --------------------- */
-  .stage-decision-yes .stage-num { color: var(--accent); }
-  .stage-decision-no .stage-num { color: var(--muted); }
-
-  /* Termini --------------------------------------- */
-  .terminus {
-    border: 1px solid var(--line);
-    border-radius: 8px;
-    padding: 14px 16px;
-    background: var(--paper-2);
-    font-family: var(--mono);
-    font-size: 11px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--ink);
-    line-height: 1.4;
-  }
-  .terminus.terminus-win {
-    background: var(--primary);
-    color: #fff;
-    border-color: var(--primary);
-  }
-  .terminus.terminus-loss {
-    border-style: dashed;
-    color: var(--muted);
-  }
-  .terminus.terminus-placeholder {
-    border-style: dashed;
-    background: transparent;
-    color: var(--muted);
-  }
-  .terminus.terminus-ongoing {
-    background: rgba(43, 179, 163, 0.08);
-    border-color: rgba(43, 179, 163, 0.35);
-    color: var(--ink);
-  }
-  .terminus small {
-    display: block;
-    font-weight: 400;
-    color: var(--muted);
-    font-size: 10px;
-    margin-top: 4px;
-    text-transform: none;
-    letter-spacing: 0.04em;
-  }
-
-  /* Flow section layout --------------------------- */
-  .flow-col {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-  }
-  .flow-col > .flow-row {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 20px;
-    align-items: stretch;
-  }
-  .flow-row.cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-  .flow-row.cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .flow-row.cols-5 { grid-template-columns: repeat(5, minmax(0, 1fr)); }
-
-  .flow-label {
-    font-family: var(--mono);
-    font-size: 10px;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--muted);
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 4px;
-  }
-  .flow-label::after {
-    content: "";
-    flex: 1;
-    height: 1px;
-    background: var(--line);
-  }
-
-  /* Gated transition marker ----------------------- */
-  .gate-marker {
-    position: relative;
-    margin: 12px 0;
-    border: 1px dashed rgba(43, 179, 163, 0.5);
-    background: rgba(43, 179, 163, 0.04);
-    border-radius: 6px;
-    padding: 10px 14px;
-    font-family: var(--mono);
-    font-size: 10px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--accent);
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  .gate-marker::before {
-    content: "↑";
-    font-size: 14px;
-    font-weight: bold;
-  }
-
-  /* Legend ---------------------------------------- */
-  .legend {
-    margin: 40px 0 0;
-    padding: 20px 24px;
-    background: var(--paper-2);
-    border: 1px solid var(--line);
-    border-radius: 8px;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 24px;
-    align-items: center;
-  }
-  .legend-title {
-    font-family: var(--mono);
-    font-size: 10px;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--muted);
-    padding-right: 16px;
-    border-right: 1px solid var(--line);
-  }
-  .legend-item {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 12px;
-    color: var(--muted);
-  }
-
-  /* Horizontal scroll hint ------------------------ */
-  .scroll-hint {
-    display: none;
-    font-family: var(--mono);
-    font-size: 10px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--muted);
-    padding: 8px 0;
-  }
-  @media (max-width: 1280px) {
-    .scroll-hint { display: block; }
-  }
-</style>
 </head>
 <body>
 
@@ -352,236 +26,265 @@
 
   <section class="page-intro">
     <span class="kicker plain">Sales Framework · Working Draft</span>
-    <h1>The prospect journey, <em>end to end.</em></h1>
-    <p class="lede">Every prospect begins with the same ask. What happens next depends on their answer — and on the signals they send us along the way. Click any stage for detail.</p>
+    <h1>Two paths. <em>One journey.</em></h1>
+    <p class="lede">Every prospect begins with the same ask. Where they go next depends on the answer — and on the signals they send along the way.</p>
   </section>
 
-  <div class="scroll-hint">← scroll horizontally →</div>
+  <div class="map">
 
-  <section class="journey">
-    <div class="journey-scroll">
+    <!-- Legend, small -->
+    <div class="map-legend" aria-label="Legend">
+      <span class="legend-item"><span class="chip chip-critical">Critical</span></span>
+      <span class="legend-item"><span class="chip chip-semi">Semi</span></span>
+      <span class="legend-item"><span class="chip chip-non">Non</span></span>
+      <span class="legend-item">Hover <em style="font-style:italic;font-family:var(--display);color:var(--muted);margin: 0 4px;">i</em> for detail · click to deep dive</span>
+    </div>
 
-      <div class="journey-grid">
+    <!-- Lane headers -->
+    <div class="lane-headers">
+      <div class="lane-header lane-header-proposal">
+        <span class="lane-name">Proposal Lane</span>
+        <span class="lane-kicker">● Yes · active path</span>
+      </div>
+      <div class="lane-header lane-header-nurture">
+        <span class="lane-name">Nurture Lane</span>
+        <span class="lane-kicker">No · slow path</span>
+      </div>
+    </div>
 
-        <!-- ORIGIN: Stage 1 ---------------------- -->
-        <div class="origin-col">
-          <a href="stage-1.html" class="stage stage-origin" data-stage="1">
-            <span class="stage-num">Stage 01 · Origin</span>
-            <span class="stage-title">Initial ask</span>
-            <div class="stage-body">ESCO asks the prospect to schedule a free evaluation and proposal.</div>
-            <div class="stage-footer">
-              <button class="expand-btn" type="button" onclick="toggleStage(event, this)">Expand</button>
-              <span class="deep-link">Deep dive →</span>
+    <!-- Origin: Stage 1 spans both lanes -->
+    <a class="origin-card" href="stage-1.html">
+      <div class="origin-text">
+        <span class="origin-num">Stage 01 · Origin</span>
+        <span class="origin-title">Initial ask</span>
+      </div>
+      <span class="origin-link">Deep dive →</span>
+    </a>
+
+    <!-- Fan-out arrows from origin into each lane -->
+    <div class="fan-row">
+      <svg class="fan-svg" viewBox="0 0 1000 60" preserveAspectRatio="none">
+        <!-- Left fan: origin center to proposal lane center -->
+        <path d="M 500 0 L 250 56" stroke="rgba(255,255,255,0.4)" stroke-width="2" fill="none" />
+        <polygon points="250,60 246,52 254,52" fill="rgba(255,255,255,0.5)" />
+        <!-- Right fan: origin center to nurture lane center -->
+        <path d="M 500 0 L 750 56" stroke="rgba(10,15,28,0.35)" stroke-width="2" fill="none" />
+        <polygon points="750,60 746,52 754,52" fill="rgba(10,15,28,0.5)" />
+      </svg>
+    </div>
+
+    <!-- Two lanes side by side -->
+    <div class="lanes-row" id="lanesRow">
+
+      <!-- ================= PROPOSAL LANE ================= -->
+      <div class="lane lane-proposal">
+        <div class="stage-list">
+
+          <!-- Stage 02 · Yes -->
+          <a class="stage-card" href="stage-2.html">
+            <div class="stage-head">
+              <span class="stage-num">Stage 02 · Yes</span>
+              <button class="stage-info-btn" type="button" onclick="toggleTooltip(event, this)" aria-label="More info">i</button>
             </div>
-            <div class="expandable">
-              This is the same opening ask for every prospect, regardless of size or vertical. The response sends them down one of two lanes.
+            <span class="stage-title">Accepts evaluation</span>
+            <div class="stage-chips">
+              <span class="chip chip-critical">Critical</span>
+              <span class="chip chip-semi">Semi</span>
+            </div>
+            <div class="tooltip" role="tooltip">
+              <div class="tt-body">At least semi-critical, possibly critical. Urgency to schedule is a second-order signal — sooner = more critical.</div>
+              <div class="tt-body">
+                <span class="tt-label">Timing</span>
+                Walkthrough targeted within 1 week. Interval set by prospect.
+              </div>
             </div>
           </a>
-        </div>
 
-        <!-- LANES ------------------------------- -->
-        <div class="lanes">
+          <div class="rail-connector" data-timing="Target · 1 week">
+            <span class="rail-timing">Target · 1 week</span>
+          </div>
 
-          <!-- PROPOSAL LANE (TOP) -->
-          <div class="lane lane-proposal">
-            <div class="flow-label">Proposal Lane · Yes</div>
-
-            <div class="flow-col">
-              <div class="flow-row cols-5">
-
-                <!-- Stage 2 Yes -->
-                <a href="stage-2.html" class="stage stage-decision-yes" data-stage="2y">
-                  <span class="stage-num">Stage 02 · Yes</span>
-                  <span class="stage-title">Accepts evaluation</span>
-                  <div class="stage-chips">
-                    <span class="chip chip-critical">Critical</span>
-                    <span class="chip chip-semi">Semi-critical</span>
-                  </div>
-                  <div class="stage-body">Urgency to schedule is itself a state signal — sooner = more critical.</div>
-                  <div class="stage-chips">
-                    <span class="chip chip-timing">Target · within 1 week</span>
-                  </div>
-                  <div class="stage-footer">
-                    <button class="expand-btn" type="button" onclick="toggleStage(event, this)">Expand</button>
-                    <span class="deep-link">Deep dive →</span>
-                  </div>
-                  <div class="expandable">
-                    Walkthrough interval is typically set by the prospect, not ESCO. Very short requested intervals (days, not weeks) read as critical.
-                  </div>
-                </a>
-
-                <!-- Stage 3 -->
-                <a href="stage-3.html" class="stage" data-stage="3">
-                  <span class="stage-num">Stage 03</span>
-                  <span class="stage-title">Walkthrough</span>
-                  <div class="stage-chips">
-                    <span class="chip chip-critical">Critical</span>
-                    <span class="chip chip-semi">Semi-critical</span>
-                  </div>
-                  <div class="stage-body">ESCO walks the facility. State is refined via conversation and observed conditions.</div>
-                  <div class="stage-chips">
-                    <span class="chip chip-timing">4 Business Days to Proposal</span>
-                  </div>
-                  <div class="stage-footer">
-                    <button class="expand-btn" type="button" onclick="toggleStage(event, this)">Expand</button>
-                    <span class="deep-link">Deep dive →</span>
-                  </div>
-                  <div class="expandable">
-                    A proposal is always produced. Where constraints would disqualify, ESCO prices the proposal to the constraint instead of declining.
-                  </div>
-                </a>
-
-                <!-- Stage 4 -->
-                <a href="stage-4.html" class="stage" data-stage="4">
-                  <span class="stage-num">Stage 04</span>
-                  <span class="stage-title">Proposal submitted</span>
-                  <div class="stage-body">Follow-up at 5 and 10 business days. Three outcome paths.</div>
-                  <div class="stage-chips">
-                    <span class="chip chip-timing">Follow-up · 5 / 10 days</span>
-                  </div>
-                  <div class="stage-footer">
-                    <button class="expand-btn" type="button" onclick="toggleStage(event, this)">Expand</button>
-                    <span class="deep-link">Deep dive →</span>
-                  </div>
-                  <div class="expandable">
-                    <strong>Path A:</strong> accepted → references → negotiation → signed.<br>
-                    <strong>Path B:</strong> rejected (direct or post-negotiation).<br>
-                    <strong>Path C:</strong> no clear decision communicated.
-                  </div>
-                </a>
-
-                <!-- Termini column 1 -->
-                <div class="flow-col" style="gap: 12px;">
-                  <div class="terminus terminus-win">
-                    Contract signed
-                    <small>Path A</small>
-                  </div>
-                  <div class="terminus terminus-loss">
-                    Lost · direct rejection
-                    <small>Path B</small>
-                  </div>
-                </div>
-
-                <!-- Termini column 2 -->
-                <div class="flow-col" style="gap: 12px;">
-                  <div class="terminus terminus-loss">
-                    Lost · declined after negotiation
-                    <small>Path B</small>
-                  </div>
-                  <div class="terminus terminus-placeholder">
-                    Undefined · no clear decision
-                    <small>Path C · placeholder</small>
-                  </div>
-                </div>
-
+          <!-- Stage 03 · Walkthrough (gate lands here) -->
+          <a class="stage-card" id="gateTarget" href="stage-3.html">
+            <div class="stage-head">
+              <span class="stage-num">Stage 03</span>
+              <button class="stage-info-btn" type="button" onclick="toggleTooltip(event, this)" aria-label="More info">i</button>
+            </div>
+            <span class="stage-title">Walkthrough</span>
+            <div class="stage-chips">
+              <span class="chip chip-critical">Critical</span>
+              <span class="chip chip-semi">Semi</span>
+            </div>
+            <div class="tooltip" role="tooltip">
+              <div class="tt-body">ESCO walks the facility. State is refined through conversation and observed conditions.</div>
+              <div class="tt-body">
+                <span class="tt-label">Timing</span>
+                4 business days from walkthrough to proposal.
+              </div>
+              <div class="tt-body">
+                <span class="tt-label">Commitment</span>
+                A proposal is always produced.
               </div>
             </div>
+          </a>
+
+          <div class="rail-connector">
+            <span class="rail-timing">4 Bus. Days</span>
           </div>
 
-          <!-- GATE MARKER -->
-          <div class="lane-gap">
-            <div class="gate-marker">
-              Gated transition · state shifts to semi-critical or critical, prospect accepts evaluation offer → enters Stage 03
+          <!-- Stage 04 · Proposal -->
+          <a class="stage-card" href="stage-4.html">
+            <div class="stage-head">
+              <span class="stage-num">Stage 04</span>
+              <button class="stage-info-btn" type="button" onclick="toggleTooltip(event, this)" aria-label="More info">i</button>
             </div>
-          </div>
-
-          <!-- NURTURE LANE (BOTTOM) -->
-          <div class="lane lane-nurture">
-            <div class="flow-label">Nurture Lane · No</div>
-
-            <div class="flow-col">
-              <div class="flow-row cols-5">
-
-                <!-- Stage 2 No -->
-                <a href="stage-2.html" class="stage stage-decision-no" data-stage="2n">
-                  <span class="stage-num">Stage 02 · No</span>
-                  <span class="stage-title">Declines evaluation</span>
-                  <div class="stage-chips">
-                    <span class="chip chip-non">Non-critical</span>
-                  </div>
-                  <div class="stage-body">Most likely non-critical. Moves into the nurture offer.</div>
-                  <div class="stage-footer">
-                    <button class="expand-btn" type="button" onclick="toggleStage(event, this)">Expand</button>
-                    <span class="deep-link">Deep dive →</span>
-                  </div>
-                  <div class="expandable">
-                    The "no" here is a signal but not a final state — state can shift as facility conditions or leadership change.
-                  </div>
-                </a>
-
-                <!-- Stage 2a -->
-                <a href="stage-2a.html" class="stage" data-stage="2a">
-                  <span class="stage-num">Stage 02a</span>
-                  <span class="stage-title">Nurture offer</span>
-                  <div class="stage-sub">Cadence offered · 60 days</div>
-                  <div class="stage-body">Four response types, each carrying a different signal.</div>
-                  <div class="stage-chips">
-                    <span class="chip chip-timing">60 Days default</span>
-                  </div>
-                  <div class="stage-footer">
-                    <button class="expand-btn" type="button" onclick="toggleStage(event, this)">Expand</button>
-                    <span class="deep-link">Deep dive →</span>
-                  </div>
-                  <div class="expandable">
-                    <ul>
-                      <li>Eager → likely semi-critical</li>
-                      <li>Sets specific date / alt. cadence → likely semi-critical</li>
-                      <li>Accepts hedgingly / asks to extend → likely non-critical</li>
-                      <li>Declines nurture → 3-year check-in</li>
-                    </ul>
-                  </div>
-                </a>
-
-                <!-- Stage 2b -->
-                <a href="stage-2b.html" class="stage" data-stage="2b">
-                  <span class="stage-num">Stage 02b</span>
-                  <span class="stage-title">Nurture path</span>
-                  <div class="stage-sub">Runs indefinitely</div>
-                  <div class="stage-body">Two possible transitions: state shifts (promotes up to Stage 03) or prospect declines all future outreach.</div>
-                  <div class="stage-footer">
-                    <button class="expand-btn" type="button" onclick="toggleStage(event, this)">Expand</button>
-                    <span class="deep-link">Deep dive →</span>
-                  </div>
-                  <div class="expandable">
-                    State-change signals: requests for shorter follow-up intervals, acceptance of a walkthrough, communication of dissatisfaction with current vendor.
-                  </div>
-                </a>
-
-                <!-- Nurture termini column 1 -->
-                <div class="flow-col" style="gap: 12px;">
-                  <div class="terminus terminus-ongoing">
-                    Ongoing nurture
-                    <small>60-day cadence holds</small>
-                  </div>
-                </div>
-
-                <!-- Nurture termini column 2 -->
-                <div class="flow-col" style="gap: 12px;">
-                  <div class="terminus">
-                    3-year check-in cadence
-                    <small>Nurture declined</small>
-                  </div>
-                </div>
-
+            <span class="stage-title">Proposal submitted</span>
+            <div class="tooltip" role="tooltip">
+              <div class="tt-body">Follow-up cadence: 5 business days after submission, then another 5.</div>
+              <div class="tt-body">
+                <span class="tt-label">Three paths</span>
+                <ul>
+                  <li>A · Accepted → references → negotiation → signed</li>
+                  <li>B · Rejected (direct or post-negotiation)</li>
+                  <li>C · No clear decision</li>
+                </ul>
               </div>
             </div>
+          </a>
+
+          <div class="rail-connector">
+            <span class="rail-timing">5 / 10 Bus. Days</span>
           </div>
+
+          <!-- Proposal lane termini -->
+          <div class="termini-label">— Outcomes —</div>
+          <div class="termini">
+            <div class="terminus terminus-win">
+              <span>Contract signed</span>
+              <span class="t-sub">Path A</span>
+            </div>
+            <div class="terminus terminus-loss">
+              <span>Lost · direct rejection</span>
+              <span class="t-sub">Path B</span>
+            </div>
+            <div class="terminus terminus-loss">
+              <span>Lost · after negotiation</span>
+              <span class="t-sub">Path B</span>
+            </div>
+            <div class="terminus terminus-placeholder">
+              <span>Undefined · no decision</span>
+              <span class="t-sub">Path C · placeholder</span>
+            </div>
+          </div>
+
         </div>
-
       </div>
 
-      <!-- LEGEND ------------------------------------ -->
-      <div class="legend">
-        <span class="legend-title">Legend</span>
-        <span class="legend-item"><span class="chip chip-critical">Critical</span></span>
-        <span class="legend-item"><span class="chip chip-semi">Semi-critical</span></span>
-        <span class="legend-item"><span class="chip chip-non">Non-critical</span></span>
-        <span class="legend-item"><span class="chip chip-timing">Timing</span></span>
-        <span class="legend-item"><span class="chip chip-placeholder">Placeholder — to develop</span></span>
+      <!-- ================= NURTURE LANE ================= -->
+      <div class="lane lane-nurture">
+        <div class="stage-list">
+
+          <!-- Stage 02 · No -->
+          <a class="stage-card" href="stage-2.html">
+            <div class="stage-head">
+              <span class="stage-num">Stage 02 · No</span>
+              <button class="stage-info-btn" type="button" onclick="toggleTooltip(event, this)" aria-label="More info">i</button>
+            </div>
+            <span class="stage-title">Declines evaluation</span>
+            <div class="stage-chips">
+              <span class="chip chip-non">Non-critical</span>
+            </div>
+            <div class="tooltip" role="tooltip">
+              <div class="tt-body">Most likely non-critical. Not a dead end — opens the nurture relationship.</div>
+              <div class="tt-body">State can flip later as conditions, leadership, or vendor satisfaction change.</div>
+            </div>
+          </a>
+
+          <div class="rail-connector"></div>
+
+          <!-- Stage 02a · Nurture offer -->
+          <a class="stage-card" href="stage-2a.html">
+            <div class="stage-head">
+              <span class="stage-num">Stage 02a</span>
+              <button class="stage-info-btn" type="button" onclick="toggleTooltip(event, this)" aria-label="More info">i</button>
+            </div>
+            <span class="stage-title">Nurture offer</span>
+            <div class="tooltip" role="tooltip">
+              <div class="tt-body">
+                <span class="tt-label">Default cadence</span>
+                60 days. Holds constant unless prospect requests a change.
+              </div>
+              <div class="tt-body">
+                <span class="tt-label">Four response types</span>
+                <ul>
+                  <li>Eager → semi-critical</li>
+                  <li>Sets date/cadence → semi-critical</li>
+                  <li>Hedging / extend → non-critical</li>
+                  <li>Declines nurture → 3-year cadence</li>
+                </ul>
+              </div>
+            </div>
+          </a>
+
+          <div class="rail-connector">
+            <span class="rail-timing">60-day cadence</span>
+          </div>
+
+          <!-- Stage 02b · Nurture path -->
+          <a class="stage-card" id="gateSource" href="stage-2b.html">
+            <div class="stage-head">
+              <span class="stage-num">Stage 02b</span>
+              <button class="stage-info-btn" type="button" onclick="toggleTooltip(event, this)" aria-label="More info">i</button>
+            </div>
+            <span class="stage-title">Nurture path</span>
+            <div class="tooltip" role="tooltip">
+              <div class="tt-body">Active 60-day cadence. Runs indefinitely unless the prospect exits.</div>
+              <div class="tt-body">
+                <span class="tt-label">State-change signals</span>
+                Shorter interval requested · walkthrough accepted · vendor dissatisfaction.
+              </div>
+              <div class="tt-body">
+                <span class="tt-label">Exits</span>
+                Promotes to proposal lane (gated) or declines all outreach → 3-year cadence.
+              </div>
+            </div>
+          </a>
+
+          <div class="rail-connector"></div>
+
+          <!-- Nurture lane termini -->
+          <div class="termini-label">— Outcomes —</div>
+          <div class="termini">
+            <div class="terminus terminus-ongoing">
+              <span>Ongoing nurture</span>
+              <span class="t-sub">60-day holds</span>
+            </div>
+            <div class="terminus terminus-checkin">
+              <span>3-year check-in</span>
+              <span class="t-sub">Nurture declined</span>
+            </div>
+          </div>
+
+        </div>
       </div>
+
+      <!-- Gated transition arrow (SVG overlay, positioned by JS) -->
+      <svg class="gate-svg" id="gateSvg" width="100" height="100" aria-hidden="true">
+        <defs>
+          <marker id="gateArrow" viewBox="0 0 10 10" refX="8" refY="5"
+                  markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="#2BB3A3" />
+          </marker>
+        </defs>
+        <path id="gatePath" d="" stroke="#2BB3A3" stroke-width="2" fill="none"
+              stroke-dasharray="6 4" marker-end="url(#gateArrow)" />
+        <text id="gateLabel" font-family="JetBrains Mono, monospace" font-size="10"
+              font-weight="500" letter-spacing="1.2" fill="#2BB3A3"
+              text-anchor="middle">GATED · STATE SHIFTS</text>
+      </svg>
 
     </div>
-  </section>
+  </div>
 
 </main>
 
@@ -593,12 +296,74 @@
 </footer>
 
 <script>
-  function toggleStage(e, btn) {
+  // Tooltip toggle (for touch / click)
+  function toggleTooltip(e, btn) {
     e.preventDefault();
     e.stopPropagation();
-    const card = btn.closest('.stage');
-    const isOpen = card.classList.toggle('open');
-    btn.textContent = isOpen ? 'Collapse' : 'Expand';
+    const card = btn.closest('.stage-card');
+    // Close others
+    document.querySelectorAll('.stage-card.show-tooltip').forEach(c => {
+      if (c !== card) c.classList.remove('show-tooltip');
+    });
+    card.classList.toggle('show-tooltip');
+  }
+  // Click outside closes any open tooltip
+  document.addEventListener('click', function(e) {
+    if (!e.target.closest('.stage-card')) {
+      document.querySelectorAll('.stage-card.show-tooltip').forEach(c => {
+        c.classList.remove('show-tooltip');
+      });
+    }
+  });
+
+  // Draw the gated transition arrow from Stage 02b up-and-left to Stage 03
+  function drawGate() {
+    const source = document.getElementById('gateSource');
+    const target = document.getElementById('gateTarget');
+    const row = document.getElementById('lanesRow');
+    const svg = document.getElementById('gateSvg');
+    const path = document.getElementById('gatePath');
+    const label = document.getElementById('gateLabel');
+    if (!source || !target || !row || !svg || !path) return;
+
+    const rowRect = row.getBoundingClientRect();
+    const sRect = source.getBoundingClientRect();
+    const tRect = target.getBoundingClientRect();
+
+    // Start: left edge, vertical center of source card (Stage 02b)
+    const sx = sRect.left - rowRect.left;
+    const sy = sRect.top + sRect.height / 2 - rowRect.top;
+
+    // End: right edge, vertical center of target card (Stage 03)
+    const tx = tRect.right - rowRect.left;
+    const ty = tRect.top + tRect.height / 2 - rowRect.top;
+
+    // Size SVG to the row
+    svg.setAttribute('width', rowRect.width);
+    svg.setAttribute('height', rowRect.height);
+    svg.style.left = '0px';
+    svg.style.top = '0px';
+    svg.setAttribute('viewBox', `0 0 ${rowRect.width} ${rowRect.height}`);
+
+    // Draw a smooth curve: exit source to the left, arc across and up, enter target on the right
+    const midX = (sx + tx) / 2;
+    const ctrlOffset = Math.max(40, Math.abs(sy - ty) * 0.4);
+    // Cubic Bézier curve
+    const d = `M ${sx} ${sy} C ${sx - 60} ${sy}, ${midX} ${sy - ctrlOffset}, ${midX} ${(sy + ty) / 2} S ${tx + 60} ${ty}, ${tx} ${ty}`;
+    path.setAttribute('d', d);
+
+    // Position the label near the top of the arc
+    if (label) {
+      label.setAttribute('x', midX);
+      label.setAttribute('y', (sy + ty) / 2 - 10);
+    }
+  }
+
+  window.addEventListener('load', drawGate);
+  window.addEventListener('resize', drawGate);
+  // Redraw after fonts load to catch layout shifts
+  if (document.fonts) {
+    document.fonts.ready.then(drawGate);
   }
 </script>
 

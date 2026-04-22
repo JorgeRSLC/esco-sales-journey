@@ -5,7 +5,9 @@
 :root {
   --primary: #0A2540;
   --primary-2: #0D2D4D;
+  --primary-3: #14395E;
   --accent:  #2BB3A3;
+  --accent-soft: rgba(43, 179, 163, 0.12);
   --paper:   #FFFFFF;
   --paper-2: #F4F6F8;
   --paper-3: #E6EAEE;
@@ -116,21 +118,21 @@ a { color: inherit; text-decoration: none; }
   align-items: center;
   gap: 6px;
   font-family: var(--mono);
-  font-size: 11px;
+  font-size: 10px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   border-radius: 999px;
-  padding: 4px 10px;
+  padding: 3px 8px;
   white-space: nowrap;
 }
 .chip-critical {
-  background: rgba(43, 179, 163, 0.12);
+  background: var(--accent-soft);
   color: var(--accent);
-  border: 1px solid rgba(43, 179, 163, 0.35);
+  border: 1px solid rgba(43, 179, 163, 0.4);
 }
 .chip-critical::before {
   content: "";
-  width: 6px; height: 6px;
+  width: 5px; height: 5px;
   border-radius: 50%;
   background: var(--accent);
 }
@@ -155,44 +157,21 @@ a { color: inherit; text-decoration: none; }
   border: 1px dashed var(--line);
 }
 
-/* Buttons & links ---------------------------------- */
-.btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 12px 20px;
-  border-radius: 4px;
-  font-family: var(--body);
-  font-weight: 500;
-  font-size: 14px;
-  cursor: pointer;
-  border: 1px solid transparent;
-  transition: background 0.15s ease, color 0.15s ease;
+/* On-navy chip variants */
+.lane-proposal .chip-semi {
+  background: rgba(255,255,255,0.08);
+  color: rgba(255,255,255,0.75);
+  border: 1px solid rgba(255,255,255,0.2);
 }
-.btn-primary { background: var(--primary); color: #fff; }
-.btn-primary:hover { background: var(--primary-2); }
-.btn-ghost {
-  background: transparent;
-  color: var(--ink);
-  border-color: var(--line);
+.lane-proposal .chip-non {
+  background: rgba(255,255,255,0.04);
+  color: rgba(255,255,255,0.6);
+  border: 1px solid rgba(255,255,255,0.14);
 }
-.btn-ghost:hover { background: var(--paper-2); }
 
-.text-link {
-  font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--accent);
-  border-bottom: 1px solid rgba(43, 179, 163, 0.4);
-  padding-bottom: 1px;
-  transition: border-color 0.15s ease;
-}
-.text-link:hover { border-bottom-color: var(--accent); }
-
-/* Page kicker / title block ------------------------ */
+/* Page intro --------------------------------------- */
 .page-intro {
-  padding: 72px 0 40px;
+  padding: 56px 0 32px;
 }
 .page-intro .kicker { margin-bottom: 20px; }
 .page-intro h1 {
@@ -207,17 +186,17 @@ a { color: inherit; text-decoration: none; }
   color: var(--accent);
 }
 .page-intro .lede {
-  margin-top: 20px;
-  max-width: 640px;
+  margin-top: 16px;
+  max-width: 560px;
   color: var(--muted);
-  font-size: 16px;
+  font-size: 15px;
 }
 
 /* Footer ------------------------------------------- */
 .site-footer {
-  margin-top: 96px;
+  margin-top: 72px;
   border-top: 1px solid var(--line);
-  padding: 32px 0;
+  padding: 24px 0;
 }
 .site-footer .container {
   display: flex;
@@ -230,7 +209,481 @@ a { color: inherit; text-decoration: none; }
   color: var(--muted);
 }
 
-/* Deep-dive page layout ---------------------------- */
+/* ===================================================
+   SWIM LANE MAP
+   =================================================== */
+
+.map {
+  position: relative;
+  padding: 0 0 48px;
+}
+
+.map-legend {
+  display: flex;
+  justify-content: flex-end;
+  gap: 16px;
+  align-items: center;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+.map-legend .legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* Lane headers */
+.lane-headers {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-bottom: 0;
+}
+.lane-header {
+  padding: 14px 20px;
+  border-radius: 8px 8px 0 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.lane-header .lane-name {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 18px;
+  letter-spacing: -0.02em;
+}
+.lane-header .lane-kicker {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.lane-header-proposal {
+  background: var(--primary);
+  color: #fff;
+}
+.lane-header-proposal .lane-kicker { color: var(--accent); }
+.lane-header-nurture {
+  background: var(--paper-2);
+  color: var(--ink);
+  border: 1px solid var(--line);
+  border-bottom: none;
+}
+.lane-header-nurture .lane-kicker { color: var(--muted); }
+
+/* Origin card (Stage 1 spans both lanes) */
+.origin-card {
+  background: var(--primary);
+  color: #fff;
+  padding: 24px 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.15s ease;
+  border-top: 1px solid rgba(255,255,255,0.1);
+}
+.origin-card:hover { background: var(--primary-2); }
+.origin-card .origin-text {
+  display: flex;
+  align-items: baseline;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.origin-card .origin-num {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.origin-card .origin-title {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 26px;
+  letter-spacing: -0.02em;
+  color: #fff;
+}
+.origin-card .origin-link {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.65);
+  white-space: nowrap;
+}
+.origin-card:hover .origin-link { color: var(--accent); }
+
+/* Fan-out arrows row (between origin and lanes) */
+.fan-row {
+  position: relative;
+  height: 60px;
+}
+.fan-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: visible;
+}
+
+/* Lanes row + lanes */
+.lanes-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  position: relative;
+  align-items: stretch;
+}
+
+.lane {
+  padding: 28px 24px 28px;
+  border-radius: 0 0 8px 8px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+.lane-proposal {
+  background: var(--primary);
+  color: #fff;
+}
+.lane-nurture {
+  background: var(--paper-2);
+  border: 1px solid var(--line);
+  border-top: none;
+}
+
+/* Stage list inside lane */
+.stage-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  flex: 1;
+}
+
+/* Rail connector between stages */
+.rail-connector {
+  position: relative;
+  width: 2px;
+  height: 56px;
+  margin: 0 auto;
+  flex-shrink: 0;
+}
+.lane-proposal .rail-connector { background: rgba(255,255,255,0.22); }
+.lane-nurture  .rail-connector { background: var(--line); }
+.rail-connector::after {
+  content: "";
+  position: absolute;
+  bottom: -1px; left: 50%;
+  transform: translateX(-50%);
+  width: 0; height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 7px solid;
+}
+.lane-proposal .rail-connector::after { border-top-color: rgba(255,255,255,0.4); }
+.lane-nurture  .rail-connector::after { border-top-color: var(--muted); }
+
+/* Timing label on the rail, hidden until hovered */
+.rail-connector .rail-timing {
+  position: absolute;
+  left: calc(50% + 14px);
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  padding: 3px 8px;
+  border-radius: 4px;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  pointer-events: none;
+}
+.lane-proposal .rail-connector .rail-timing {
+  color: #fff;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.22);
+}
+.lane-nurture .rail-connector .rail-timing {
+  color: var(--ink);
+  background: var(--paper);
+  border: 1px solid var(--line);
+}
+.rail-connector:hover .rail-timing,
+.lane:hover .rail-connector .rail-timing { opacity: 1; }
+
+/* Stage card ----------------------------------- */
+.stage-card {
+  width: 100%;
+  max-width: 360px;
+  border-radius: 8px;
+  padding: 18px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+  position: relative;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+}
+
+/* Proposal lane cards: dark on navy lane */
+.lane-proposal .stage-card {
+  background: var(--primary-2);
+  border: 1px solid rgba(255,255,255,0.14);
+  color: #fff;
+}
+.lane-proposal .stage-card:hover {
+  background: var(--primary-3);
+  border-color: var(--accent);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px rgba(0,0,0,0.35);
+}
+
+/* Nurture lane cards: white on paper */
+.lane-nurture .stage-card {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  color: var(--ink);
+}
+.lane-nurture .stage-card:hover {
+  border-color: var(--primary);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px rgba(10, 37, 64, 0.12);
+}
+
+.stage-card .stage-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+}
+.stage-card .stage-num {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.lane-proposal .stage-card .stage-num { color: var(--accent); }
+.lane-nurture .stage-card .stage-num { color: var(--muted); }
+
+.stage-card .stage-info-btn {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 1px solid currentColor;
+  background: transparent;
+  color: currentColor;
+  opacity: 0.5;
+  font-family: var(--display);
+  font-size: 11px;
+  font-weight: 700;
+  font-style: italic;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  cursor: pointer;
+  line-height: 1;
+  transition: opacity 0.15s ease;
+  flex-shrink: 0;
+}
+.stage-card .stage-info-btn:hover,
+.stage-card:hover .stage-info-btn { opacity: 1; }
+
+.stage-card .stage-title {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 22px;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+.stage-card .stage-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+/* Tooltip ------------------------------------------- */
+.stage-card .tooltip {
+  position: absolute;
+  top: calc(100% + 12px);
+  left: 50%;
+  transform: translateX(-50%) translateY(4px);
+  width: 300px;
+  max-width: 90vw;
+  background: var(--ink);
+  color: #fff;
+  padding: 14px 16px;
+  border-radius: 6px;
+  font-size: 13px;
+  line-height: 1.5;
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+  transition: opacity 0.18s ease, transform 0.18s ease, visibility 0s linear 0.18s;
+  z-index: 20;
+  box-shadow: 0 20px 48px rgba(10, 37, 64, 0.4);
+  text-align: left;
+}
+.stage-card .tooltip::before {
+  content: "";
+  position: absolute;
+  top: -5px;
+  left: 50%;
+  transform: translateX(-50%) rotate(45deg);
+  width: 10px; height: 10px;
+  background: var(--ink);
+}
+.stage-card:hover .tooltip,
+.stage-card.show-tooltip .tooltip {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+  transition: opacity 0.18s ease, transform 0.18s ease, visibility 0s linear 0s;
+}
+.stage-card .tooltip .tt-body {
+  color: rgba(255,255,255,0.85);
+  margin-bottom: 10px;
+}
+.stage-card .tooltip .tt-body:last-child { margin-bottom: 0; }
+.stage-card .tooltip .tt-label {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.55);
+  margin-bottom: 4px;
+  display: block;
+}
+.stage-card .tooltip ul {
+  margin: 0;
+  padding-left: 18px;
+  color: rgba(255,255,255,0.85);
+  font-size: 12.5px;
+}
+.stage-card .tooltip ul li { margin-bottom: 2px; }
+
+/* Termini ------------------------------------------- */
+.termini-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin: 16px 0 8px;
+  text-align: center;
+}
+.lane-proposal .termini-label { color: rgba(255,255,255,0.5); }
+.lane-nurture  .termini-label { color: var(--muted); }
+
+.termini {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+  width: 100%;
+}
+.terminus {
+  width: 100%;
+  max-width: 360px;
+  padding: 14px 18px;
+  border-radius: 6px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  line-height: 1.4;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+.terminus .t-sub {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  opacity: 0.65;
+  font-weight: 400;
+}
+
+/* Proposal lane termini */
+.lane-proposal .terminus-win {
+  background: var(--accent);
+  color: var(--primary);
+  font-weight: 600;
+}
+.lane-proposal .terminus-loss {
+  background: transparent;
+  color: rgba(255,255,255,0.5);
+  border: 1px dashed rgba(255,255,255,0.25);
+}
+.lane-proposal .terminus-placeholder {
+  background: transparent;
+  color: rgba(255,255,255,0.45);
+  border: 1px dashed rgba(255,255,255,0.2);
+}
+
+/* Nurture lane termini */
+.lane-nurture .terminus-ongoing {
+  background: var(--accent-soft);
+  color: var(--primary);
+  border: 1px solid rgba(43, 179, 163, 0.4);
+  font-weight: 500;
+}
+.lane-nurture .terminus-checkin {
+  background: var(--paper);
+  color: var(--muted);
+  border: 1px solid var(--line);
+}
+
+/* Gated transition arrow (overlays between lanes) -- */
+.gate-svg {
+  position: absolute;
+  pointer-events: none;
+  overflow: visible;
+  z-index: 3;
+}
+
+/* Mobile ------------------------------------------- */
+@media (max-width: 900px) {
+  .lane-headers,
+  .lanes-row {
+    grid-template-columns: 1fr;
+  }
+  .fan-row { height: 36px; }
+  .origin-card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .stage-card { max-width: 100%; }
+  .terminus { max-width: 100%; }
+  .lane-header-proposal,
+  .lane-header-nurture {
+    border-radius: 8px 8px 0 0;
+  }
+  .lane-nurture { margin-top: 16px; }
+  .lane-header-nurture { border-top: 1px solid var(--line); }
+}
+
+/* ===================================================
+   DEEP-DIVE PAGE LAYOUT (unchanged)
+   =================================================== */
+
 .stage-nav {
   border-bottom: 1px solid var(--line);
   background: var(--paper-2);
@@ -329,7 +782,6 @@ a { color: inherit; text-decoration: none; }
   color: var(--muted);
   font-weight: 500;
   margin-bottom: 12px;
-  letter-spacing: 0.14em;
 }
 .side-card .chip { margin: 2px 4px 2px 0; }
 .side-card p {
