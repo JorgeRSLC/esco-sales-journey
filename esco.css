@@ -1,0 +1,382 @@
+/* ESCO — shared styles
+   Tokens and patterns per brand spec v0.1
+   ======================================= */
+
+:root {
+  --primary: #0A2540;
+  --primary-2: #0D2D4D;
+  --accent:  #2BB3A3;
+  --paper:   #FFFFFF;
+  --paper-2: #F4F6F8;
+  --paper-3: #E6EAEE;
+  --ink:     #0A0F1C;
+  --line:      rgba(10, 15, 28, 0.12);
+  --line-soft: rgba(10, 15, 28, 0.07);
+  --muted:     rgba(10, 15, 28, 0.58);
+
+  --display: 'Figtree', system-ui, sans-serif;
+  --body:    'Inter', system-ui, sans-serif;
+  --mono:    'JetBrains Mono', ui-monospace, monospace;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  font-family: var(--body);
+  background: var(--paper);
+  color: var(--ink);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--display);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  margin: 0;
+}
+
+a { color: inherit; text-decoration: none; }
+
+/* Layout ------------------------------------------- */
+.container {
+  max-width: 1360px;
+  margin: 0 auto;
+  padding: 0 48px;
+}
+
+@media (max-width: 768px) {
+  .container { padding: 0 24px; }
+}
+
+/* Header ------------------------------------------- */
+.site-header {
+  border-bottom: 1px solid var(--line);
+  background: var(--paper);
+}
+.site-header .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+.logo-lockup {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  color: var(--ink);
+}
+.logo-lockup .wordmark {
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: 28px;
+  letter-spacing: -0.03em;
+  color: var(--primary);
+}
+.logo-lockup .divider {
+  width: 1px;
+  height: 28px;
+  background: var(--line);
+}
+.logo-lockup .subtext {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+  text-transform: uppercase;
+  line-height: 1.5;
+}
+
+/* Kicker chips ------------------------------------- */
+.kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  background: var(--paper-2);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 5px 10px;
+}
+.kicker.plain {
+  background: transparent;
+  border: none;
+  padding: 0;
+}
+
+/* State chips -------------------------------------- */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border-radius: 999px;
+  padding: 4px 10px;
+  white-space: nowrap;
+}
+.chip-critical {
+  background: rgba(43, 179, 163, 0.12);
+  color: var(--accent);
+  border: 1px solid rgba(43, 179, 163, 0.35);
+}
+.chip-critical::before {
+  content: "";
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+.chip-semi {
+  background: var(--paper-2);
+  color: var(--muted);
+  border: 1px solid var(--line);
+}
+.chip-non {
+  background: var(--paper-3);
+  color: var(--muted);
+  border: 1px solid var(--line);
+}
+.chip-timing {
+  background: transparent;
+  color: var(--muted);
+  border: 1px solid var(--line);
+}
+.chip-placeholder {
+  background: transparent;
+  color: var(--muted);
+  border: 1px dashed var(--line);
+}
+
+/* Buttons & links ---------------------------------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 20px;
+  border-radius: 4px;
+  font-family: var(--body);
+  font-weight: 500;
+  font-size: 14px;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+.btn-primary { background: var(--primary); color: #fff; }
+.btn-primary:hover { background: var(--primary-2); }
+.btn-ghost {
+  background: transparent;
+  color: var(--ink);
+  border-color: var(--line);
+}
+.btn-ghost:hover { background: var(--paper-2); }
+
+.text-link {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  border-bottom: 1px solid rgba(43, 179, 163, 0.4);
+  padding-bottom: 1px;
+  transition: border-color 0.15s ease;
+}
+.text-link:hover { border-bottom-color: var(--accent); }
+
+/* Page kicker / title block ------------------------ */
+.page-intro {
+  padding: 72px 0 40px;
+}
+.page-intro .kicker { margin-bottom: 20px; }
+.page-intro h1 {
+  font-size: 48px;
+  line-height: 1.0;
+  letter-spacing: -0.035em;
+  font-weight: 700;
+  max-width: 780px;
+}
+.page-intro h1 em {
+  font-style: normal;
+  color: var(--accent);
+}
+.page-intro .lede {
+  margin-top: 20px;
+  max-width: 640px;
+  color: var(--muted);
+  font-size: 16px;
+}
+
+/* Footer ------------------------------------------- */
+.site-footer {
+  margin-top: 96px;
+  border-top: 1px solid var(--line);
+  padding: 32px 0;
+}
+.site-footer .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* Deep-dive page layout ---------------------------- */
+.stage-nav {
+  border-bottom: 1px solid var(--line);
+  background: var(--paper-2);
+  padding: 14px 0;
+}
+.stage-nav .container {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+.stage-nav .nav-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding-right: 16px;
+  border-right: 1px solid var(--line);
+  margin-right: 12px;
+}
+.stage-nav a {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding: 6px 10px;
+  border-radius: 4px;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+.stage-nav a:hover { background: var(--paper); color: var(--ink); }
+.stage-nav a.active {
+  background: var(--primary);
+  color: #fff;
+}
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 16px;
+}
+.back-link:hover { color: var(--ink); }
+
+.detail-grid {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 48px;
+  align-items: start;
+  margin-top: 24px;
+}
+@media (max-width: 900px) {
+  .detail-grid { grid-template-columns: 1fr; gap: 32px; }
+}
+
+.detail-main h2 {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin: 32px 0 12px;
+}
+.detail-main h2:first-child { margin-top: 0; }
+.detail-main p {
+  color: var(--ink);
+  font-size: 15px;
+  max-width: 66ch;
+  margin: 0 0 12px;
+}
+.detail-main ul {
+  margin: 0 0 16px;
+  padding-left: 20px;
+  color: var(--ink);
+  font-size: 15px;
+}
+.detail-main ul li { margin-bottom: 8px; }
+.detail-main strong { font-weight: 600; }
+
+.side-card {
+  background: var(--paper-2);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 20px 22px;
+  margin-bottom: 16px;
+}
+.side-card h3 {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 500;
+  margin-bottom: 12px;
+  letter-spacing: 0.14em;
+}
+.side-card .chip { margin: 2px 4px 2px 0; }
+.side-card p {
+  font-size: 13px;
+  color: var(--ink);
+  margin: 0 0 8px;
+}
+.side-card p:last-child { margin-bottom: 0; }
+.side-card .spec-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--line-soft);
+  font-size: 12px;
+}
+.side-card .spec-row:last-child { border-bottom: none; }
+.side-card .spec-row .label {
+  font-family: var(--mono);
+  color: var(--muted);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: 10px;
+}
+.side-card .spec-row .value {
+  font-family: var(--mono);
+  color: var(--ink);
+  font-size: 11px;
+}
+
+.signals-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.signals-list li {
+  padding: 10px 0;
+  border-bottom: 1px solid var(--line-soft);
+  font-size: 13px;
+  color: var(--ink);
+}
+.signals-list li:last-child { border-bottom: none; }
+.signals-list li .signal-label {
+  display: block;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 4px;
+}

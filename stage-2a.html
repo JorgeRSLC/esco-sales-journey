@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>ESCO · Stage 02a — Nurture Offer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" />
+<link rel="stylesheet" href="esco.css" />
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container">
+    <div class="logo-lockup">
+      <a href="index.html" style="display:flex; align-items:center; gap:16px;">
+        <span class="wordmark">ESCO</span>
+        <span class="divider"></span>
+        <span class="subtext">Essential<br>Services Co.</span>
+      </a>
+    </div>
+    <span class="kicker">● <span style="color:var(--accent)">Prospect Journey</span> · v0.1</span>
+  </div>
+</header>
+
+<nav class="stage-nav">
+  <div class="container">
+    <span class="nav-label">Stages</span>
+    <a href="stage-1.html">01 · Initial ask</a>
+    <a href="stage-2.html">02 · Response</a>
+    <a href="stage-2a.html" class="active">02a · Nurture offer</a>
+    <a href="stage-2b.html">02b · Nurture path</a>
+    <a href="stage-3.html">03 · Walkthrough</a>
+    <a href="stage-4.html">04 · Proposal</a>
+  </div>
+</nav>
+
+<main class="container">
+  <section class="page-intro">
+    <a href="index.html" class="back-link">← Back to overview</a>
+    <span class="kicker plain">Stage 02a · Nurture lane</span>
+    <h1>Nurture offer.</h1>
+    <p class="lede">After a declined evaluation, ESCO asks to stay in touch on a regular cadence. Initial offer: every 60 days.</p>
+  </section>
+
+  <div class="detail-grid">
+
+    <div class="detail-main">
+      <h2>How it works</h2>
+      <p>If the prospect says no to the evaluation, ESCO asks for permission to contact them at a regular cadence. The default offer is every 60 days, and that cadence holds constant unless the prospect explicitly requests to accelerate or decelerate.</p>
+
+      <h2>The four response types</h2>
+      <p>Each response type carries its own state signal:</p>
+      <ul>
+        <li><strong>Eager</strong> — looks forward to hearing from ESCO. Likely semi-critical.</li>
+        <li><strong>Specific</strong> — sets a specific date or alternative cadence. Likely semi-critical.</li>
+        <li><strong>Hedging</strong> — accepts without much interest, or asks to extend the cadence. Likely non-critical.</li>
+        <li><strong>Declines</strong> — opts out of nurture altogether. Non-critical. Drops to a 3-year check-in cadence unless they reach out first.</li>
+      </ul>
+
+      <h2>Where it goes next</h2>
+      <ul>
+        <li>Eager / Specific / Hedging → Stage 02b · Nurture path (active 60-day cadence, or adjusted per request).</li>
+        <li>Declines → 3-year check-in cadence.</li>
+      </ul>
+
+      <h2>Open questions</h2>
+      <ul>
+        <li>For "specific" responders who set an alternative cadence, do we track the cadence they proposed, or normalize everything to 60 days in reporting?</li>
+        <li>What's the right script for re-confirming interest at each nurture touch?</li>
+      </ul>
+    </div>
+
+    <aside>
+      <div class="side-card">
+        <h3>State Signals</h3>
+        <ul class="signals-list">
+          <li>
+            <span class="signal-label">Eager</span>
+            <span class="chip chip-semi">Semi-critical</span>
+          </li>
+          <li>
+            <span class="signal-label">Specific date / cadence</span>
+            <span class="chip chip-semi">Semi-critical</span>
+          </li>
+          <li>
+            <span class="signal-label">Hedging / extend</span>
+            <span class="chip chip-non">Non-critical</span>
+          </li>
+          <li>
+            <span class="signal-label">Declines</span>
+            <span class="chip chip-non">Non-critical</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="side-card">
+        <h3>Timing</h3>
+        <div class="spec-row">
+          <span class="label">Default cadence</span>
+          <span class="value">60 days</span>
+        </div>
+        <div class="spec-row">
+          <span class="label">Adjusts</span>
+          <span class="value">On request only</span>
+        </div>
+        <div class="spec-row">
+          <span class="label">Decline cadence</span>
+          <span class="value">3 years</span>
+        </div>
+      </div>
+
+      <div class="side-card">
+        <h3>Outputs</h3>
+        <ul class="signals-list">
+          <li>
+            <span class="signal-label">Active nurture</span>
+            → Stage 02b · Nurture path
+          </li>
+          <li>
+            <span class="signal-label">Declines</span>
+            → 3-year check-in terminus
+          </li>
+        </ul>
+      </div>
+    </aside>
+
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <span>ESCO · Prospect Journey · v0.1</span>
+    <span>Working draft · April 2026</span>
+  </div>
+</footer>
+
+</body>
+</html>
